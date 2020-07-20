@@ -18,7 +18,11 @@
       "supportsTablet": true
     },
     "android": {
-      "permissions": ["CAMERA_ROLL"]
+      "permissions": [
+        "CAMERA_ROLL",
+        "READ_EXTERNAL_STORAGE",
+        "WRITE_EXTERNAL_STORAGE"
+      ]
     },
     "web": {
       "favicon": "./assets/favicon.png"
