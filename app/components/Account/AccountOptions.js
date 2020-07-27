@@ -1,12 +1,13 @@
 import React, { useState } from "react";
-import { StyleSheet, View, Text } from "react-native";
+import { StyleSheet, View } from "react-native";
 import { ListItem } from "react-native-elements";
 import { map } from "lodash";
 import Modal from "../Modal";
 import ChangeDisplayNameForm from "./ChangeDisplayNameForm";
+import ChangeEmailForm from "./ChangeEmailForm";
 
 export default function AccountOptions(props) {
-  const { userInfo, toastRef, setReloadUserInfo } = props;
+  const { userInfo, toastRef, setRealoadUserInfo } = props;
   const [showModal, setShowModal] = useState(false);
   const [renderComponent, setRenderComponent] = useState(null);
 
@@ -18,13 +19,20 @@ export default function AccountOptions(props) {
             displayName={userInfo.displayName}
             setShowModal={setShowModal}
             toastRef={toastRef}
-            setReloadUserInfo={setReloadUserInfo}
+            setRealoadUserInfo={setRealoadUserInfo}
           />
         );
         setShowModal(true);
         break;
       case "email":
-        setRenderComponent(<Text>Cambiando email</Text>);
+        setRenderComponent(
+          <ChangeEmailForm
+            email={userInfo.email}
+            setShowModal={setShowModal}
+            toastRef={toastRef}
+            setRealoadUserInfo={setRealoadUserInfo}
+          />
+        );
         setShowModal(true);
         break;
       case "password":
@@ -38,6 +46,7 @@ export default function AccountOptions(props) {
     }
   };
   const menuOptions = generateOptions(selectedComponent);
+
   return (
     <View>
       {map(menuOptions, (menu, index) => (
@@ -89,7 +98,7 @@ function generateOptions(selectedComponent) {
       onPress: () => selectedComponent("email"),
     },
     {
-      title: "Cambiar cotraseña",
+      title: "Cambiar contraseña",
       iconType: "material-community",
       iconNameLeft: "lock-reset",
       iconColorLeft: "#ccc",
