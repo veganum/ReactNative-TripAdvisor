@@ -13,13 +13,17 @@
     "updates": {
       "fallbackToCacheTimeout": 0
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
     "android": {
+      "package": "com.josefranconieto.cincotenedores",
+      "config": {
+        "googleMaps": {
+          "apiKey": "AIzaSyCXJ3PZ8RF59PEeg5rl9ha81H_ejcq_WGA"
+        }
+      },
       "permissions": [
         "CAMERA_ROLL",
         "READ_EXTERNAL_STORAGE",
