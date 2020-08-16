@@ -3,10 +3,18 @@ import { StyleSheet, View, Text } from "react-native";
 import { Icon } from "react-native-elements";
 import { firebaseApp } from "../../utils/firebase";
 import firebase from "firebase/app";
+import "firebase/firestore";
+import ListRestaurants from "../../components/Restaurants/ListRestaurants";
+
+const db = firebase.firestore(firebaseApp);
 
 export default function Restaurants(props) {
   const { navigation } = props;
   const [user, setUser] = useState(null);
+  const [restaurants, setRestaurants] = useState([]);
+  const [totalRestaurants, setTotalRestaurants] = useState(0);
+  const [startRestaurants, setStartRestaurants] = useState(null);
+  const limitRestaurants = 10;
 
   useEffect(() => {
     firebase.auth().onAuthStateChanged((userInfo) => {
@@ -14,9 +22,35 @@ export default function Restaurants(props) {
     });
   }, []);
 
+  useEffect(() => {
+    db.collection("restaurants")
+      .get()
+      .then((snap) => {
+        setTotalRestaurants(snap.size);
+      });
+
+    const resultRestaurants = [];
+
+    db.collection("restaurants")
+      .orderBy("createAt", "desc")
+      .limit(limitRestaurants)
+      .get()
+      .then((response) => {
+        setStartRestaurants(response.docs[response.docs.length - 1]);
+
+        response.forEach((doc) => {
+          const restaurant = doc.data();
+          restaurant.id = doc.id;
+
+          resultRestaurants.push(restaurant);
+        });
+        setRestaurants(resultRestaurants);
+      });
+  }, []);
+
   return (
     <View style={styles.viewBody}>
-      <Text>Restaurants..</Text>
+      <ListRestaurants restaurants={restaurants} />
       {user && (
         <Icon
           reverse

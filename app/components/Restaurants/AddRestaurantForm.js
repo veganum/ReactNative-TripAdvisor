@@ -53,7 +53,6 @@ export default function AddRestaurantForm(props) {
           })
           .then(() => {
             setIsLoading(false);
-            console.log("OK");
             navigation.navigate("restaurants");
           })
           .catch(() => {
@@ -69,7 +68,7 @@ export default function AddRestaurantForm(props) {
   const uploadImageStorage = async () => {
     const imageBlob = [];
 
-    Promise.all(
+    await Promise.all(
       map(imagesSelected, async (image) => {
         const response = await fetch(image);
         const blob = await response.blob();
