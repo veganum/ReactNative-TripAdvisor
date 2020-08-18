@@ -12,6 +12,7 @@ import { Rating, ListItem, Icon } from "react-native-elements";
 import Loading from "../../components/Loading";
 import Carousel from "../../components/Carousel";
 import Map from "../../components/Map";
+import ListReview from "../../components/Restaurants/ListReviews";
 
 import { firebaseApp } from "../../utils/firebase";
 import firebase from "firebase/app";
@@ -26,11 +27,11 @@ export default function Restaurant(props) {
   const [restaurant, setRestaurant] = useState(null);
   const [rating, setRating] = useState(0);
 
-  console.log(restaurant);
+  //console.log(restaurant);
 
   navigation.setOptions({ title: name });
 
-  console.log(restaurant);
+  //console.log(restaurant);
 
   useEffect(() => {
     db.collection("restaurants")
@@ -62,6 +63,11 @@ export default function Restaurant(props) {
         location={restaurant.location}
         name={restaurant.name}
         address={restaurant.address}
+      />
+      <ListReview
+        navigation={navigation}
+        idRestaurant={restaurant.id}
+        setRating={setRating}
       />
     </ScrollView>
   );
