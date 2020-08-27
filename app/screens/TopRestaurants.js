@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { View, Text } from "react-native";
+import { View } from "react-native";
 import Toast from "react-native-easy-toast";
+import ListTopRestaurants from "../components/Ranking/ListTopRestaurants";
 
 import { firebaseApp } from "../utils/firebase";
 import firebase from "firebase";
@@ -12,8 +13,6 @@ export default function TopRestaurants(props) {
   const { navigation } = props;
   const [restaurants, setRestaurants] = useState([]);
   const toastRef = useRef();
-
-  console.log(restaurants);
 
   useEffect(() => {
     db.collection("restaurants")
@@ -33,7 +32,7 @@ export default function TopRestaurants(props) {
 
   return (
     <View>
-      <Text>TopRestaurants..</Text>
+      <ListTopRestaurants restaurants={restaurants} navigation={navigation} />
       <Toast ref={toastRef} position="center" opacity={0.9} />
     </View>
   );
